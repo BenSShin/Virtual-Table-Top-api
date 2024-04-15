@@ -18,7 +18,7 @@ const CharacterSchema = new Schema({
   },
 });
 
-const character = mongoose.model("Scene", CharacterSchema);
-const characterImage = mongoose.model("SceneImage", CharacterImageSchema);
+const Character = mongoose.model("Character", CharacterSchema);
+const CharacterImage = mongoose.model("CharacterImage", CharacterImageSchema);
 
-module.exports = { character, characterImage };
+module.exports = { Character, CharacterImage };

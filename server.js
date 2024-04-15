@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 4002;
 const app = express();
 
 const scene = require("./routes/api/controllers/sceneController");
+const character = require("./routes/api/controllers/characterController");
 
 // https://teach.ai.com
 // https://teach-ai-backend.com
@@ -33,6 +34,7 @@ app.use(helmet());
 connectDB();
 
 app.use("/api/v1/map/scene", scene);
+app.use("/api/v1/map/character", character);
 
 // app.use("/api/v1/teach/ai/auth/controller", authControlller);
 const server = app.listen(PORT, console.log(`API is listening on port ${PORT}`));
