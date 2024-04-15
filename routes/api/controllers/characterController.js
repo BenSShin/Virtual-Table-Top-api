@@ -32,4 +32,35 @@ router.post("/create/character", upload.single("image"), async (req, res) => {
   }
 });
 
+// to get the image info
+router.get("/:characterId/info", async (req, res) => {
+  try {
+    const characterId = req.params.characterId;
+    const character = await Character.findById(characterId);
+    if (!character) {
+      return res.status(404).json({ error: "Character was not found." });
+    }
+    res.status(200).json(character);
+  } catch (error) {
+    console.log(error);
+    handleError(error, res);
+  }
+});
+
+// to get the image
+router.get("/:characterImageId/image", async (req, res) => {
+  try {
+    const characterId = req.params.characterImageId;
+    const character = await CharacterImage.findById(characterId);
+    if (!character) {
+      return res.status(404).json({ error: "Character image not found" });
+    }
+    res.set("Content-Type", character.contentType);
+    res.send(character.data);
+  } catch (error) {
+    console.log(error);
+    handleError(error, res);
+  }
+});
+
 module.exports = router;
