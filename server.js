@@ -11,6 +11,8 @@ const connectDB = require("./db");
 const PORT = process.env.PORT || 4002;
 const app = express();
 
+const scene = require("./routes/api/controllers/sceneController");
+
 // https://teach.ai.com
 // https://teach-ai-backend.com
 // Enable CORS for all routes
@@ -29,6 +31,8 @@ app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use(helmet());
 connectDB();
+
+app.use("/api/v1/map/scene", scene);
 
 // app.use("/api/v1/teach/ai/auth/controller", authControlller);
 const server = app.listen(PORT, console.log(`API is listening on port ${PORT}`));

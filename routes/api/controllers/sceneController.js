@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const handleError = require("../../../utils/handleError");
 const multer = require("multer");
-const SceneImage = require("../../../models/scene");
-const Scene = require("../../../models/scene");
+const { Scene, SceneImage } = require("../../../models/scene");
 const ObjectId = require("mongodb").ObjectId;
 
 const storage = multer.memoryStorage();
@@ -23,7 +22,7 @@ router.post("/create/scene", upload.single("image"), async (req, res) => {
 
     const newScene = new Scene({
       sceneName: req.body.sceneName,
-      sceneImage: sceneImage.ObjectId,
+      sceneImage: sceneImage._id,
     });
     await newScene.save();
 
@@ -33,3 +32,21 @@ router.post("/create/scene", upload.single("image"), async (req, res) => {
     handleError(error, res);
   }
 });
+
+router.get("/:sceneId/image", async (req, res) => {
+  // use sceneImage id not scene Id
+  try {
+    const sceneId = req.params.sceneId;
+    const scene = await SceneImage.findById(sceneId);
+    if (!scene) {
+      return res.status(404).json({ error: "Scene image not Found." });
+    }
+    res.set("Content-Type", scene.contentType);
+    res.send(scene.data);
+  } catch (error) {
+    console.log(error);
+    handleError(error, res);
+  }
+});
+
+module.exports = router;
