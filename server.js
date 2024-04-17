@@ -13,6 +13,7 @@ const app = express();
 
 const scene = require("./routes/api/controllers/sceneController");
 const character = require("./routes/api/controllers/characterController");
+const prop = require("./routes/api/controllers/propController");
 
 // https://teach.ai.com
 // https://teach-ai-backend.com
@@ -35,6 +36,7 @@ connectDB();
 
 app.use("/api/v1/map/scene", scene);
 app.use("/api/v1/map/character", character);
+app.use("/api/v1/map/prop", prop);
 
 // app.use("/api/v1/teach/ai/auth/controller", authControlller);
 const server = app.listen(PORT, console.log(`API is listening on port ${PORT}`));

@@ -31,4 +31,19 @@ router.post("/create/prop", upload.single("image"), async (req, res) => {
   }
 });
 
-// router.get("/:propId/image", async)
+router.get("/:propId/image", async (req, res) => {
+  try {
+    const propId = req.params.propId;
+    const prop = await PropImage.findById(propId);
+    if (!prop) {
+      return res.status(404).json({ error: "Prop image not found." });
+    }
+    res.set("Content-Type", prop.contentType);
+    res.send(prop.data);
+  } catch (error) {
+    console.log(error);
+    handleError(error, res);
+  }
+});
+
+module.exports = router;
