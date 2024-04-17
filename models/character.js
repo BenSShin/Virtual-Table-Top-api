@@ -13,7 +13,7 @@ const CharacterSchema = new Schema({
   },
   characterImage: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "SceneImage",
+    ref: "CharacterImage",
     required: true,
   },
 });
