@@ -7,6 +7,20 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 require("dotenv").config();
 const connectDB = require("./db");
+const WebSocket = require("ws");
+
+const wss = new WebSocket.Server({ port: 8080 });
+
+wss.on("connection", function connection(ws) {
+  console.log("New WebSocket connection");
+  // Handle messages from the client
+  ws.on("message", function incoming(message) {
+    console.log("Received: %s", message);
+  });
+
+  // Send a message to the client
+  ws.send("Hello, client!");
+});
 
 const PORT = process.env.PORT || 4002;
 const app = express();
@@ -40,4 +54,4 @@ app.use("/api/v1/map/prop", prop);
 
 // app.use("/api/v1/teach/ai/auth/controller", authControlller);
 const server = app.listen(PORT, console.log(`API is listening on port ${PORT}`));
-server.timeout = 20000; // 15 minute time out max
+server.timeout = 2000000; // 15 minute time out max
