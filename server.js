@@ -9,18 +9,11 @@ require("dotenv").config();
 const connectDB = require("./db");
 const WebSocket = require("ws");
 
+const { handleConnection: characterTokenWebSocketHandler } = require("./websocket/characterTokenWebSocket");
+
 const wss = new WebSocket.Server({ port: 8080 });
 
-wss.on("connection", function connection(ws) {
-  console.log("New WebSocket connection");
-  // Handle messages from the client
-  ws.on("message", function incoming(message) {
-    console.log("Received: %s", message);
-  });
-
-  // Send a message to the client
-  ws.send("Hello, client!");
-});
+wss.on("connection", characterTokenWebSocketHandler);
 
 const PORT = process.env.PORT || 4002;
 const app = express();
@@ -28,9 +21,8 @@ const app = express();
 const scene = require("./routes/api/controllers/sceneController");
 const character = require("./routes/api/controllers/characterController");
 const prop = require("./routes/api/controllers/propController");
+const characterToken = require("./routes/api/controllers/characterTokenController");
 
-// https://teach.ai.com
-// https://teach-ai-backend.com
 // Enable CORS for all routes
 app.use(
   cors({
@@ -51,7 +43,7 @@ connectDB();
 app.use("/api/v1/map/scene", scene);
 app.use("/api/v1/map/character", character);
 app.use("/api/v1/map/prop", prop);
+app.use("/api/v1/map/character_token", characterToken);
 
-// app.use("/api/v1/teach/ai/auth/controller", authControlller);
 const server = app.listen(PORT, console.log(`API is listening on port ${PORT}`));
 server.timeout = 2000000; // 15 minute time out max
