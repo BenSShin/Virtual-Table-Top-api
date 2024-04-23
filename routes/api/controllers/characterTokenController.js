@@ -22,3 +22,5 @@ router.post("/create/character_token", async (req, res) => {
     handleError(error, res);
   }
 });
+
+module.exports = router;

@@ -1,6 +1,4 @@
-const WebSocket = require("ws");
-const mongoose = require("mongoose");
-const CharacterToken = require("./models/CharacterToken"); // Import your Mongoose model
+const CharacterToken = require("../models/characterToken"); // Import your Mongoose model
 
 function handleConnection(ws) {
   console.log("New WebSocket connection");
