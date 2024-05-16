@@ -73,6 +73,7 @@ s.on("upgrade", (req, socket, head) => {
 });
 
 wss.on("connection", (ws, req) => {
+  console.log("New Client Connection");
   ws.on("error", onSocketPostError);
 
   ws.on("message", (msg, isBinary) => {
@@ -88,20 +89,3 @@ wss.on("connection", (ws, req) => {
     console.log("Cnnection Closed");
   });
 });
-
-// wss.on("connection", function connection(ws) {
-//   console.log("new connection");
-//   ws.send("Welcome New Client!");
-
-//   ws.on("message", function incoming(message) {
-//     console.log("recieved %s", message);
-
-//     wss.clients.forEach(function each(client) {
-//       if (client !== ws && client.readyState === WebSocket.OPEN) {
-//         client.send(message);
-//       }
-//     });
-//   });
-// });
-
-// app.get("/", (req, res) => res.send("Hello World!"));
